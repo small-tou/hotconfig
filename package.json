@@ -1,0 +1,22 @@
+{
+  "name": "hotconfig",
+  "version": "0.0.1",
+  "description": "hot config for nodejs",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xinyu198736/hotconfig"
+  },
+  "keywords": [
+    "hot",
+    "config"
+  ],
+  "author": "yutou",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/xinyu198736/hotconfig/issues"
+  }
+}
