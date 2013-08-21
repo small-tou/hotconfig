@@ -9,11 +9,11 @@ usage
 `npm install hotconfig`
 
 then 
-
+```
 HotConfig = require 'hotconfig'
 
 HotConfig("configname");
-
+```
 then you can get a hot config
 
 
