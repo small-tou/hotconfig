@@ -4,16 +4,18 @@ HotConfig = (key)->
   if not configs[key]
     configs[key] = require HotConfig.prefix+key+".json"
   return configs[key]
+updateConfig = (key,config)->
+  fs.readFile HotConfig.prefix+key+".json",'utf-8',(error,content)->
+    obj = JSON.parse content
+    if not obj.version
+      throw new Error 'must have field "version" in config file'
+    if obj.version !=configs[key].version
+      configs[key] = obj
+    else
+      obj = null
 setInterval ()->
   for key,config of configs
-    fs.readFile HotConfig.prefix+key+".json",'utf-8',(error,content)->
-      obj = JSON.parse content
-      if not obj.version
-        throw new Error 'must have field "version" in config file'
-      if obj.version !=configs[key].version
-        configs[key] = obj
-      else
-        obj = null
+    updateConfig(key,config)
 ,1000
 
 HotConfig.prefix = __dirname
