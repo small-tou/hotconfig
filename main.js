@@ -8,7 +8,7 @@
 
   HotConfig = function(key) {
     if (!configs[key]) {
-      configs[key] = require('./' + key + ".json");
+      configs[key] = require(HotConfig.prefix + key + ".json");
     }
     return configs[key];
   };
@@ -18,9 +18,12 @@
     _results = [];
     for (key in configs) {
       config = configs[key];
-      _results.push(fs.readFile('./' + key + ".json", 'utf-8', function(error, content) {
+      _results.push(fs.readFile(HotConfig.prefix + key + ".json", 'utf-8', function(error, content) {
         var obj;
         obj = JSON.parse(content);
+        if (!obj.version) {
+          throw new Error('must have field "version" in config file');
+        }
         if (obj.version !== configs[key].version) {
           return configs[key] = obj;
         } else {
@@ -30,6 +33,8 @@
     }
     return _results;
   }, 1000);
+
+  HotConfig.prefix = __dirname;
 
   module.exports = HotConfig;
 
