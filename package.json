@@ -1,6 +1,6 @@
 {
   "name": "hotconfig",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "hot config for nodejs",
   "main": "main.js",
   "scripts": {

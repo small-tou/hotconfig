@@ -15,15 +15,20 @@
 
   updateConfig = function(key, config) {
     return fs.readFile(HotConfig.prefix + key + ".json", 'utf-8', function(error, content) {
-      var obj;
-      obj = JSON.parse(content);
-      if (!obj.version) {
-        throw new Error('must have field "version" in config file');
-      }
-      if (obj.version !== configs[key].version) {
-        return configs[key] = obj;
-      } else {
-        return obj = null;
+      var e, obj;
+      try {
+        obj = JSON.parse(content);
+        if (!obj.version) {
+          throw new Error('must have field "version" in config file');
+        }
+        if (obj.version !== configs[key].version) {
+          return configs[key] = obj;
+        } else {
+          return obj = null;
+        }
+      } catch (_error) {
+        e = _error;
+        return console.log('hotconfig parse error:' + key);
       }
     });
   };
