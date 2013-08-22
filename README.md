@@ -3,27 +3,18 @@ hotconfig
 
 hot config for nodejs
 
-usage
-=======
+https://github.com/xinyu198736/hotconfig
 
-`npm install hotconfig`
+    npm install hotconfig
 
-then 
-```
-HotConfig = require 'hotconfig'
+很多人都想让nodejs拥有热启动或者热部署的能力。可惜网上很多文章讨论的根本不是热部署，热部署在我理解，是不破坏整个nodejs进程的状态，而让进程能够在不退出的情况下更新其功能的能力。而不是网上所说的监控文件，发生改动就重启进程，这个用nodemon之类的工具非常简单，适合本地开发用，而不是线上环境。
 
-HotConfig("configname");
-```
-then you can get a hot config
+要实现进程的热部署，我想到两个方法，一个是进程接收信号，根据信号的类型来更新某一些部分的配置。linux下，应该可以通过一些命令向某个pid的进程发送信号，可惜对这方面不太擅长，试了一下，发现很多信号都被nodejs系统占用了，最终没有实现。
 
+第二个方法就是只更新配置，叫做热配置，应用里其他状态都保持不变，只有配置信息可以通过方法让其在运行时改变。而方法很简单，只需要监控配置文件，给配置文件设置版本号，版本号一旦发生改变，则更新配置。这里不用文件改变来监控是为了可控性，否则文件一变就更新配置，这在发布的时候很不方便。
 
-when you want to change config. you don't need reboot process.
+hotconfig可以维护很多个配置文件，使用hotconfig("configName")来使用某个配置。当配置更改的时候，这个方法返回的对象也会发生改变。默认加载的十prefix定义的文件夹里的configName.json
 
-just use HotConfig to load the config ,then when you change the config,change the version in config.the change will be effect in one second。
+目前只支持json配置。
 
-limit
-=======
-
-* config must be a .json file
-* must have 'version' field in config file,else will throw Error directly
-* set HotConfig.prefix before you use ,default set is __dirname
+欢迎 star follow  https://github.com/xinyu198736/hotconfig
